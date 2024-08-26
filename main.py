@@ -1,5 +1,7 @@
-from modules import Extract_file, Generate_graph, Process_file, Show_data
+from classes.Circular_list import Circular_List
+from modules import Extract_file, Generate_graph, Show_data
 from modules.Upload_file import Upload_file
+from modules.Process_file import Process_file
 
 
 def mostrar_menu():
@@ -14,6 +16,9 @@ def mostrar_menu():
 
 
 def main():
+
+    MatrixList = Circular_List()
+
     while True:
         mostrar_menu()
         opcion = input("Seleccione una opción: ")
@@ -22,12 +27,12 @@ def main():
         if opcion == "1":
 
             # Lógica para cargar archivo
-            Upload_file()
+            Upload_file(MatrixList)
 
         elif opcion == "2":
 
             # Lógica para procesar archivo
-            Process_file()
+            Process_file(MatrixList)
 
         elif opcion == "3":
 

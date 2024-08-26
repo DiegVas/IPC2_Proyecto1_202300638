@@ -2,15 +2,16 @@ import xml.etree.ElementTree as ET
 import time
 import sys
 
+from classes.Matrix import Matriz
 
-def Upload_file():
+
+def Upload_file(MatrixList):
     print("\n---- Cargar archivo ----\n")
     RuteFile = input("Ingrese la ruta del archivo XML: ")
     Errors = []
     try:
 
-        Show_progress_bar()
-
+        # Show_progress_bar()
         tree = ET.parse(RuteFile)
         root = tree.getroot()
 
@@ -25,17 +26,24 @@ def Upload_file():
             if not name or n < 1 or m < 1:
                 Errors.append("Atributos inválidos en la etiqueta <matriz>")
 
-            print(f"Matriz: {name}, Filas: {n}, Columnas: {m}")
+            if MatrixList.exists(name):
+                Errors.append(f"La matriz {name} ya existe en la lista")
+            else:
+                MatrizData = Matriz(name, n, m)
 
-            for dato in matrix.findall("dato"):
-                x = int(dato.get("x"))
-                y = int(dato.get("y"))
-                valor = dato.text
+                print(f"Matriz: {name}, Filas: {n}, Columnas: {m}")
 
-                if x < 1 or x > n or y < 1 or y > m:
-                    Errors.append(f"Coordenadas inválidas en <dato>: x={x}, y={y}")
+                for dato in matrix.findall("dato"):
+                    x = int(dato.get("x"))
+                    y = int(dato.get("y"))
+                    valor = dato.text
 
-                print(f"Dato en ({x},{y}): {valor}")
+                    if x < 1 or x > n or y < 1 or y > m:
+                        Errors.append(f"Coordenadas inválidas en <dato>: x={x}, y={y}")
+                    else:
+                        MatrizData.agregar_dato(x, y, valor)
+
+            MatrixList.agregar(MatrizData)
 
     except ET.ParseError:
         Errors.append("Error al parsear el archivo XML")

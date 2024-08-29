@@ -1,5 +1,6 @@
 from classes.Circular_list import Circular_List
-from modules import Extract_file, Generate_graph, Show_data
+from modules import Generate_graph, Show_data
+from modules.Extract_file import Extract_file
 from modules.Upload_file import Upload_file
 from modules.Process_file import Process_file
 
@@ -37,7 +38,7 @@ def main():
         elif opcion == "3":
 
             # Lógica para escribir archivo de salida
-            Extract_file()
+            Extract_file(MatrixList)
 
         elif opcion == "4":
 

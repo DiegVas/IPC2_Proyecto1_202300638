@@ -1,8 +1,9 @@
 from classes.Circular_list import Circular_List
-from modules import Generate_graph, Show_data
+from modules import Show_data
 from modules.Extract_file import Extract_file
 from modules.Upload_file import Upload_file
 from modules.Process_file import Process_file
+from modules.Generate_graph import Generate_graph
 
 
 def mostrar_menu():
@@ -43,12 +44,14 @@ def main():
         elif opcion == "4":
 
             # Lógica para mostrar datos del estudiante
+            #
+            #
             Show_data()
 
         elif opcion == "5":
 
             # Lógica para generar gráfica
-            Generate_graph()
+            Generate_graph(MatrixList)
 
         elif opcion == "6":
             print("\n---- ¡Saliendo! ----\n")

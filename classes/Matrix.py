@@ -31,7 +31,7 @@ class Matriz:
 
     def matrix_patter_access(self):
 
-        mostrar_mensaje_con_puntos("Calculando matriz binaria")
+        #  mostrar_mensaje_con_puntos("Calculando matriz binaria")
 
         matrix_pattern = Matriz(f"{self.nombre}_pattern", self.n, self.m)
         for x in range(1, self.n + 1):
@@ -53,20 +53,20 @@ class Matriz:
         for i in range(1, self.n + 1):
             fila = tuple(self.obtener_dato(i, j) for j in range(1, self.m + 1))
             if fila in filas_dict:
-                filas_dict[fila].append(i)
+                filas_dict[fila].add(i)
             else:
-                filas_dict[fila] = [i]
+                filas_dict[fila] = {i}
 
-        filas_agrupadas = list(filas_dict.values())
+        filas_agrupadas = [set(filas) for filas in filas_dict.values()]
         return filas_agrupadas
 
     def sumar_filas_agrupadas(self, otra_matriz):
 
-        mostrar_mensaje_con_puntos("Agrupando filas")
+        #    mostrar_mensaje_con_puntos("Agrupando filas")
 
         filas_agrupadas = self.agrupar_filas()
 
-        mostrar_mensaje_con_puntos("Sumando filas")
+        #    mostrar_mensaje_con_puntos("Sumando filas")
 
         resultado = Matriz("Matriz Reducida", len(filas_agrupadas), self.m)
 

@@ -5,45 +5,19 @@ import sys
 from classes.Matrix import Matriz
 
 
-def Upload_file(MatrixList):
+def Upload_file():
     print("\n---- Cargar archivo ----\n")
-    RuteFile = input("Ingrese la ruta del archivo XML: ")
+
+    ruteFile = input("Ingrese la ruta del archivo XML: ")
+
+    Show_progress_bar()
+    print("\n---- Ruta del archivo XML guardada con exito ----\n")
+
     Errors = []
     try:
 
-        # Show_progress_bar()
-        tree = ET.parse(RuteFile)
+        tree = ET.parse(ruteFile)
         root = tree.getroot()
-
-        if root.tag != "matrices":
-            raise ValueError("El archivo XML debe tener una etiqueta raíz <matrices>")
-
-        for matrix in root.findall("matriz"):
-            name = matrix.get("nombre")
-            n = int(matrix.get("n"))
-            m = int(matrix.get("m"))
-
-            if not name or n < 1 or m < 1:
-                Errors.append("Atributos inválidos en la etiqueta <matriz>")
-
-            if MatrixList.exists(name):
-                Errors.append(f"La matriz {name} ya existe en la lista")
-            else:
-                MatrizData = Matriz(name, n, m)
-
-                print(f"Matriz: {name}, Filas: {n}, Columnas: {m}")
-
-                for dato in matrix.findall("dato"):
-                    x = int(dato.get("x"))
-                    y = int(dato.get("y"))
-                    valor = dato.text
-
-                    if x < 1 or x > n or y < 1 or y > m:
-                        Errors.append(f"Coordenadas inválidas en <dato>: x={x}, y={y}")
-                    else:
-                        MatrizData.agregar_dato(x, y, valor)
-
-            MatrixList.agregar(MatrizData)
 
     except ET.ParseError:
         Errors.append("Error al parsear el archivo XML")
@@ -56,6 +30,9 @@ def Upload_file(MatrixList):
         print("\nErrores encontrados:")
         for error in Errors:
             print(error)
+        return ""
+
+    return ruteFile
 
 
 def Show_progress_bar():
@@ -80,12 +57,11 @@ def Show_progress_bar():
         "[=================   ]",
         "[==================  ]",
         "[=================== ]",
-        "[====================]",
+        "[====================]\n",
     ]
 
-    print("---- Cargando archivo ----")
+    print("---- Guardando archivo ----")
     for estado in barra:
         sys.stdout.write("\r" + estado)
         sys.stdout.flush()
-        time.sleep(0.3)
-    print("\n---- Archivo cargado. ----\n")
+        time.sleep(0.1)

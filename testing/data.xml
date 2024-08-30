@@ -21,7 +21,7 @@
         <dato x="5" y="3">3</dato>
         <dato x="5" y="4">1</dato>
     </matriz>
-        <matriz nombre="Ejemplo" n="5" m="4">
+        <matriz nombre="Ejemplo5" n="5" m="4">
         <dato x="1" y="1">2</dato>
         <dato x="1" y="2">3</dato>
         <dato x="1" y="3">0</dato>

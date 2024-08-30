@@ -1,5 +1,5 @@
 from classes.Circular_list import Circular_List
-from modules import Show_data
+from modules.Show_data import Show_data
 from modules.Extract_file import Extract_file
 from modules.Upload_file import Upload_file
 from modules.Process_file import Process_file
@@ -20,21 +20,27 @@ def mostrar_menu():
 def main():
 
     MatrixList = Circular_List()
+    RuteFile = ""
 
     while True:
         mostrar_menu()
         opcion = input("Seleccione una opción: ")
         print("\n-----------------------------\n")
 
-        if opcion == "1":
+        if RuteFile == "" and opcion != "1" and opcion != "6":
+            print(
+                "\n---- ¡Ingrese la ruta del archivo para relizar los procedimientos! ----\n"
+            )
+
+        elif opcion == "1":
 
             # Lógica para cargar archivo
-            Upload_file(MatrixList)
+            RuteFile = Upload_file()
 
         elif opcion == "2":
 
             # Lógica para procesar archivo
-            Process_file(MatrixList)
+            Process_file(MatrixList, RuteFile)
 
         elif opcion == "3":
 

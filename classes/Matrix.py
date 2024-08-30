@@ -18,8 +18,8 @@ class Matriz:
         return self.datos.get((x, y), None)
 
     def showData(self):
-        matriz_str = f"Matriz: {self.nombre}, Filas: {self.n}, Columnas: {self.m}\n"
-        print("\n---- Matriz ----\n")
+        matriz_str = f"\n --- {self.nombre}, Filas: {self.n}, Columnas: {self.m} ----\n"
+
         for x in range(1, self.n + 1):
             for y in range(1, self.m + 1):
                 matriz_str += f"{self.obtener_dato(x, y)} "
@@ -31,7 +31,7 @@ class Matriz:
 
     def matrix_patter_access(self):
 
-        #  mostrar_mensaje_con_puntos("Calculando matriz binaria")
+        mostrar_mensaje_con_puntos("Calculando matriz binaria")
 
         matrix_pattern = Matriz(f"{self.nombre}_pattern", self.n, self.m)
         for x in range(1, self.n + 1):
@@ -42,8 +42,6 @@ class Matriz:
                     matrix_pattern.datos[(x, y)] = 1
                 else:
                     matrix_pattern.datos[(x, y)] = 0
-
-        print("\nMatriz binaria calculada.")
 
         return matrix_pattern
 
@@ -62,11 +60,11 @@ class Matriz:
 
     def sumar_filas_agrupadas(self, otra_matriz):
 
-        #    mostrar_mensaje_con_puntos("Agrupando filas")
+        mostrar_mensaje_con_puntos("Agrupando filas")
 
         filas_agrupadas = self.agrupar_filas()
 
-        #    mostrar_mensaje_con_puntos("Sumando filas")
+        mostrar_mensaje_con_puntos("Sumando filas")
 
         resultado = Matriz("Matriz Reducida", len(filas_agrupadas), self.m)
 
@@ -100,5 +98,5 @@ def mostrar_mensaje_con_puntos(mensaje):
     print(mensaje, end="", flush=True)
     for _ in range(5):
         print(".", end="", flush=True)
-        time.sleep(1)
+        time.sleep(0.3)
     print()

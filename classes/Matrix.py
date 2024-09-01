@@ -55,7 +55,7 @@ class Matriz:
             else:
                 filas_dict[fila] = {i}
 
-        filas_agrupadas = [set(filas) for filas in filas_dict.values()]
+        filas_agrupadas = {frozenset(filas) for filas in filas_dict.values()}
         return filas_agrupadas
 
     def sumar_filas_agrupadas(self, otra_matriz):

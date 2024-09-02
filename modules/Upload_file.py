@@ -1,8 +1,5 @@
 import xml.etree.ElementTree as ET
-import time
-import sys
-
-from classes.Matrix import Matriz
+from classes.ErrorManager import ErrorManager
 
 
 def Upload_file():
@@ -10,58 +7,23 @@ def Upload_file():
 
     ruteFile = input("Ingrese la ruta del archivo XML: ")
 
-    Show_progress_bar()
     print("\n---- Ruta del archivo XML guardada con exito ----\n")
 
-    Errors = []
+    error_manager = ErrorManager()
     try:
-
         tree = ET.parse(ruteFile)
         root = tree.getroot()
 
     except ET.ParseError:
-        Errors.append("Error al parsear el archivo XML")
+        error_manager.add_error("Error al parsear el archivo XML")
     except FileNotFoundError:
-        Errors.append("Archivo no encontrado")
+        error_manager.add_error("Archivo no encontrado")
     except Exception as e:
-        Errors.append(f"Error: {e}")
+        error_manager.add_error(f"Error: {e}")
 
-    if Errors:
+    if error_manager.has_errors():
         print("\nErrores encontrados:")
-        for error in Errors:
-            print(error)
+        print(error_manager.get_errors())
         return ""
 
     return ruteFile
-
-
-def Show_progress_bar():
-    barra = [
-        "[                    ]",
-        "[=                   ]",
-        "[==                  ]",
-        "[===                 ]",
-        "[====                ]",
-        "[=====               ]",
-        "[======              ]",
-        "[=======             ]",
-        "[========            ]",
-        "[=========           ]",
-        "[==========          ]",
-        "[===========         ]",
-        "[============        ]",
-        "[=============       ]",
-        "[==============      ]",
-        "[===============     ]",
-        "[================    ]",
-        "[=================   ]",
-        "[==================  ]",
-        "[=================== ]",
-        "[====================]\n",
-    ]
-
-    print("---- Guardando archivo ----")
-    for estado in barra:
-        sys.stdout.write("\r" + estado)
-        sys.stdout.flush()
-        time.sleep(0.1)

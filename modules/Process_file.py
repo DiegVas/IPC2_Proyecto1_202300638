@@ -1,10 +1,11 @@
 import xml.etree.ElementTree as ET
 from classes.Matrix import Matriz
+from classes.ErrorManager import ErrorManager
 
 
 def Process_file(circular_list, ruteFile):
 
-    Errors = []
+    error_manager = ErrorManager()
     try:
 
         # Show_progress_bar()
@@ -20,10 +21,10 @@ def Process_file(circular_list, ruteFile):
             m = int(matrix.get("m"))
 
             if not name or n < 1 or m < 1:
-                Errors.append("Atributos inválidos en la etiqueta <matriz>")
+                error_manager.add_error("Atributos inválidos en la etiqueta <matriz>")
 
             if circular_list.exists(name):
-                Errors.append(f"La matriz {name} ya existe en la lista")
+                error_manager.add_error(f"La matriz {name} ya existe en la lista")
             else:
                 MatrizData = Matriz(name, n, m)
 
@@ -35,19 +36,20 @@ def Process_file(circular_list, ruteFile):
                     valor = dato.text
 
                     if x < 1 or x > n or y < 1 or y > m:
-                        Errors.append(f"Coordenadas inválidas en <dato>: x={x}, y={y}")
+                        error_manager.add_error(
+                            f"Coordenadas inválidas en <dato>: x={x}, y={y}"
+                        )
                     else:
                         MatrizData.agregar_dato(x, y, valor)
 
             circular_list.agregar(MatrizData)
 
     except Exception as e:
-        Errors.append(f"Error: {e}")
+        error_manager.add_error(f"Error: {e}")
 
-    if Errors:
+    if error_manager.has_errors():
         print("\nErrores encontrados:")
-        for error in Errors:
-            print(error)
+        print(error_manager.get_errors())
         print("")
 
     for matriz in circular_list:

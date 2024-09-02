@@ -11,10 +11,9 @@ def Generate_graph(circular_list):
             break
 
     if matriz_encontrada:
-        # Obtener dimensiones y valores de la matriz
+        # Obtener dimensiones de la matriz
         filas = matriz_encontrada.n
         columnas = matriz_encontrada.m
-        valores = matriz_encontrada.datos
 
         # Crear el gráfico con Graphviz
         dot = graphviz.Digraph(comment=nombre_matriz)
@@ -27,8 +26,7 @@ def Generate_graph(circular_list):
         # Añadir nodos para los valores de la matriz
         for i in range(1, filas + 1):
             for j in range(1, columnas + 1):
-
-                valor = valores.get((i, j), 0)
+                valor = matriz_encontrada.obtener_dato(i, j)
                 dot.node(f"{i}{j}", label=str(valor), shape="Msquare")
 
                 if i == 1:
@@ -40,9 +38,6 @@ def Generate_graph(circular_list):
         dot.render(f"{nombre_matriz}_grafica", format="pdf")
 
         # Matriz reducida
-
-        # Obtener dimensiones y valores de la matriz
-
         matriz_reducida = (
             matriz_encontrada.matrix_patter_access().sumar_filas_agrupadas(
                 matriz_encontrada
@@ -51,7 +46,6 @@ def Generate_graph(circular_list):
 
         filas = matriz_reducida.n
         columnas = matriz_reducida.m
-        valores = matriz_reducida.datos
 
         # Crear el gráfico con Graphviz
         dot = graphviz.Digraph(comment=nombre_matriz)
@@ -64,8 +58,7 @@ def Generate_graph(circular_list):
         # Añadir nodos para los valores de la matriz
         for i in range(1, filas + 1):
             for j in range(1, columnas + 1):
-
-                valor = valores.get((i, j), 0)
+                valor = matriz_reducida.obtener_dato(i, j)
                 dot.node(f"{i}{j}", label=str(valor), shape="Msquare")
 
                 if i == 1:
